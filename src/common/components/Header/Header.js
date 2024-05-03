@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     padding: "10px 0px",
-    position: "absolute",
+    position: "fixed",
     backgroundColor: "#E30702",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
