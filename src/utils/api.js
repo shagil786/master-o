@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let baseUrl = "http://localhost:3001/api";
+let baseUrl = "https://master-o-backend-1.onrender.com/api";
 
 export const getPoints = () =>
   axios.get(`${baseUrl}/user-points`).then(({ data }) => data);
