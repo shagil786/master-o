@@ -101,10 +101,10 @@ const GameCenter = () => {
   };
 
   useEffect(() => {
-    console.log(diceValue, bidValue);
-    oneRef.current.rollDice();
-    twoRef.current.rollDice();
     if (diceValue != undefined) {
+      console.log(diceValue, bidValue);
+      oneRef.current.rollDice();
+      twoRef.current.rollDice();
       if (diceValue?.sum === bidValue) {
         getResult(diceValue?.sum, bidAmount)
           .then((res) => {
