@@ -95,14 +95,19 @@ const Dashboard = () => {
   const username = getUserDetailsInfo()?.name;
   const classes = useStyles();
   const navigate = useNavigate();
-  const [topPlayers, setTopPlayers] = useState([
-    { name: "Md Shagil", coins: 5000 },
-  ]);
+  const [topPlayers, setTopPlayers] = useState({
+    name: "Md Shagil",
+    coins: 5000,
+  });
 
   useEffect(() => {
     getPoints()
       .then((res) => {
         setBonus(res);
+        setTopPlayers((prevTopPlayers) => ({
+          ...prevTopPlayers,
+          coins: res?.userPoints,
+        }));
       })
       .catch((err) => {
         console.log(err);
@@ -140,12 +145,10 @@ const Dashboard = () => {
       <div className={classes.topPlayers}>
         <p>Top Players</p>
         <div className={classes.topPlayersConatiner}>
-          {topPlayers?.map((each, index) => (
-            <div className={classes.eachPlayer}>
-              <span>{each?.name}</span>
-              <span>{each?.coins}</span>
-            </div>
-          ))}
+          <div className={classes.eachPlayer}>
+            <span>{topPlayers?.name}</span>
+            <span>{topPlayers?.coins}</span>
+          </div>
         </div>
       </div>
     </div>

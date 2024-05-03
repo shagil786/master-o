@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GameCenter = () => {
-  const [diceValue, setDiceValue] = useState(1);
+  const [diceValue, setDiceValue] = useState();
   const [result, setResult] = useState({ message: "won" });
   const [bidValue, setBidValue] = useState(null);
   const [show, setShow] = useState();
@@ -90,37 +90,42 @@ const GameCenter = () => {
 
   const handleSubmit = (e) => {
     e.stopPropagation();
+
+    getDice()
+      .then((res) => {
+        setDiceValue(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(diceValue, bidValue);
     oneRef.current.rollDice();
     twoRef.current.rollDice();
-
-    setTimeout(() => {
+    if (diceValue != undefined) {
       if (diceValue?.sum === bidValue) {
         getResult(diceValue?.sum, bidAmount)
           .then((res) => {
-            setResult({ message: "won" });
-            setShow(true);
+            setTimeout(() => {
+              setResult({ message: "won" });
+              setShow(true);
+            }, 1000);
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
         onLoss(bidAmount).then((res) => {
-          setShow(true);
-          setResult({ message: "lost" });
+          setTimeout(() => {
+            setShow(true);
+            setResult({ message: "lost" });
+          }, 1000);
         });
       }
-    }, 1000);
-  };
-
-  useEffect(() => {
-    getDice()
-      .then((res) => {
-        setDiceValue(res?.dice1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    }
+  }, [diceValue]);
 
   const handleClick = () => {
     navigate("/app/dashboard");
@@ -162,7 +167,7 @@ const GameCenter = () => {
           <div className={classes.buttonContainer}>
             <Button
               className={classes.bidButton}
-              onClick={handleSubmit}
+              onClick={() => setShow((prev) => !prev)}
               disabled={!bidValue}
             >
               Play Again

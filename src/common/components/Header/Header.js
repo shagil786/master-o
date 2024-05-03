@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Button, makeStyles, Modal } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import profileImg from "../../../assets/images/profile.jpeg";
-import { getUserDetailsInfo } from "../../../utils/userDetailsInfo";
+import {
+  getUserDetailsInfo,
+  removeUserDetailsInfo,
+} from "../../../utils/userDetailsInfo";
+import { removeAuthCookies } from "../../../utils/cookie-utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +62,12 @@ const Header = () => {
     setShow((prev) => !prev);
   };
 
+  const handleLogout = () => {
+    removeAuthCookies();
+    removeUserDetailsInfo();
+    window.location.reload();
+  };
+
   return (
     <div className={classes?.root}>
       <Typography className={classes?.text}>Welcome to 7UP & 7DOWN!</Typography>
@@ -76,7 +86,7 @@ const Header = () => {
         <div className={classes?.modalStyle}>
           <p>Profile</p>
           <hr className={classes.border} />
-          <p>Logout</p>
+          <p onClick={handleLogout}>Logout</p>
         </div>
       </Modal>
     </div>

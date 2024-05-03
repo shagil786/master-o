@@ -5,7 +5,7 @@ import {
   Routes,
 } from "react-router-dom";
 import "./App.css";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import CommonLoader from "./common/components/CommonLoader/CommonLoader";
 import { isLoggedIn } from "./utils/cookie-utils";
 import Login from "./components/Login/Login";
@@ -15,16 +15,20 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import GameCenter from "./components/GameCenter/GameCenter";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    setLoggedIn(isLoggedIn());
+  }, [isLoggedIn()]);
   return (
     <>
-      {!isLoggedIn() ? <Header /> : null}
+      {loggedIn ? <Header /> : null}
       <Suspense fallback={<CommonLoader />}>
         <Router>
           <Routes>
             <Route
               path="/"
               Component={(props) =>
-                !isLoggedIn() ? (
+                !loggedIn ? (
                   <Login />
                 ) : (
                   <Navigate
@@ -40,7 +44,7 @@ function App() {
             <Route
               path="/app/dashboard"
               Component={(props) =>
-                !isLoggedIn() ? (
+                loggedIn ? (
                   <Dashboard />
                 ) : (
                   <Navigate
@@ -56,7 +60,7 @@ function App() {
             <Route
               path="/app/game-center"
               Component={(props) =>
-                !isLoggedIn() ? (
+                loggedIn ? (
                   <GameCenter />
                 ) : (
                   <Navigate
@@ -72,7 +76,7 @@ function App() {
           </Routes>
         </Router>
       </Suspense>
-      {!isLoggedIn() ? <NavBar /> : null}
+      {loggedIn ? <NavBar /> : null}
     </>
   );
 }

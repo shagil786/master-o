@@ -3,6 +3,8 @@ import { Button, TextField, makeStyles } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import diceImage from "../../assets/images/dice.svg";
 import { useNavigate } from "react-router-dom";
+import { setAuthCookies } from "../../utils/cookie-utils";
+import { setUserDetailsInfo } from "../../utils/userDetailsInfo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -111,7 +113,10 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.stopPropagation();
+    setAuthCookies({ token: formData.name, username: formData.name });
+    setUserDetailsInfo(formData);
     navigate("/app/dashboard");
+    window.location.reload();
   };
 
   return (
