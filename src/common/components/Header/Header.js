@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#E30702",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    zIndex: 3,
   },
   text: {
     color: "#fff",

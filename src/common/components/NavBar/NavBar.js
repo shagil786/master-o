@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#E30702",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    zIndex: 3,
   },
   container: {
     width: "100%",
